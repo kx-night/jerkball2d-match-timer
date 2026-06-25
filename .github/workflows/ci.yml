@@ -1,0 +1,54 @@
+name: Continuous Integration Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build & Test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        dotnet-version: ['10.0.x']
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Initialize .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+          cache: true
+          cache-dependency-path: |
+            **/*.csproj
+            **/*.fsproj
+            **/Directory.Build.props
+
+      - name: Restore Solution Dependencies
+        run: dotnet restore Jerkball2D.MatchTimer.slnx
+
+      - name: Compile Solution Build (Release)
+        run: dotnet build Jerkball2D.MatchTimer.slnx -c Release --no-restore
+
+      - name: Execute Functional Unit Tests
+        run: dotnet test Jerkball2D.MatchTimer.slnx -c Release --no-build --verbosity normal

@@ -1,0 +1,71 @@
+name: Bug report
+description: Report a bug in the jerkball2D match timer.
+title: "[Bug]: "
+labels: ["bug"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Summary
+      description: What happened, and what did you expect?
+      placeholder: |
+        Describe the bug clearly.
+        Include any error messages if relevant.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: List the steps needed to reproduce the bug.
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: jerkball2D match timer version you are using.
+      placeholder: e.g. 1.0.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: engine
+    attributes:
+      label: Engine
+      description: Where are you using the timer?
+      options:
+        - Unity
+        - Godot
+        - MonoGame
+        - Stride
+        - raylib-cs
+        - Custom .NET loop
+        - Other / not listed
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, .NET version, and any other relevant details.
+      placeholder: |
+        OS: Windows 11 / macOS / Linux
+        .NET: 6.0.x
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional context
+      description: Any other details, logs, or screenshots.

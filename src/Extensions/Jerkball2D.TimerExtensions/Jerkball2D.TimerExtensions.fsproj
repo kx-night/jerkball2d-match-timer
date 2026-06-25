@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Jerkball2D.TimerExtensions</AssemblyName>
+    <RootNamespace>Jerkball2D.TimerExtensions</RootNamespace>
+
+    <AnalysisMode>Recommended</AnalysisMode>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Jerkball2D.MatchTimer\Jerkball2D.MatchTimer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="TimerExtensions.fs" />
+  </ItemGroup>
+
+</Project>
