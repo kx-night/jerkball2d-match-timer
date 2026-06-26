@@ -12,7 +12,7 @@ echo "🚀 Restoring dependencies..."
 dotnet restore
 
 echo "🔥 Launching BenchmarkDotNet Execution Suite..."
-dotnet run -c Release -- --exporters json md csv --filter "*" --toolchain InProcessEmit
+dotnet run -c Release -- --exporters json md csv --filter '*'
 
 echo "✅ Execution complete! Performance artifacts generated in:"
 echo "   $TARGET_DIR/BenchmarkDotNet.Artifacts/results/"

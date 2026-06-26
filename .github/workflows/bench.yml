@@ -37,7 +37,7 @@ jobs:
         working-directory: src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks
 
       - name: Execute Performance Verification
-        run: dotnet run -c Release -- --exporters json md csv --filter "*" --toolchain InProcessEmit
+        run: dotnet run -c Release -- --exporters json md csv --filter "*"
         working-directory: src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks
 
       - name: Upload Performance Reports
