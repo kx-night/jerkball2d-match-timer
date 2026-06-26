@@ -48,8 +48,8 @@ module MatchTimerController =
         timer.Pause()
         timer
 
-    let inline resetAndPlay (timer: MatchTimer) : MatchTimer =
-        timer.ResetAndPlay()
+    let inline restart (timer: MatchTimer) : MatchTimer =
+        timer.Restart()
         timer
 
     let onFinished (callback: Action) (timer: MatchTimer) : IDisposable =

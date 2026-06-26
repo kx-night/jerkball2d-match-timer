@@ -81,14 +81,14 @@ public sealed class MatchTimerTest
     }
 
     [Fact]
-    public void ResetAndPlay_RestartsTimer()
+    public void RestartsTimer()
     {
         var timer = new MatchTimer(10f);
 
         timer.Play();
         timer.Update(3f);
 
-        timer.ResetAndPlay();
+        timer.Restart();
 
         Assert.True(timer.IsRunning);
         Assert.False(timer.IsPaused);

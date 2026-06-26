@@ -158,7 +158,7 @@ public sealed class MatchTimerBenchmark
     }
 
     [Benchmark(OperationsPerInvoke = LoopCount)]
-    public int ResetAndPlay()
+    public int Restart()
     {
         int totalLength = 0;
 
@@ -166,7 +166,7 @@ public sealed class MatchTimerBenchmark
         {
             for (int i = 0; i < _timers.Length; i++)
             {
-                _timers[i].ResetAndPlay();
+                _timers[i].Restart();
                 totalLength += _timers[i].DigitalClock.Length;
             }
         }
@@ -224,7 +224,7 @@ public sealed class TimerExtensionsBenchmark
     [IterationSetup]
     public void IterationSetup()
     {
-        _runningTimer.ResetAndPlay();
+        _runningTimer.Restart();
         _pausedTimer.ResetTo(90f);
         _pausedTimer.Pause();
     }
@@ -264,7 +264,7 @@ public sealed class TimerExtensionsBenchmark
 
         for (int i = 0; i < LoopCount; i++)
         {
-            MatchTimer timer = resetAndPlay(_runningTimer);
+            MatchTimer timer = restart(_runningTimer);
             timer = pause(timer);
             timer = play(timer);
 

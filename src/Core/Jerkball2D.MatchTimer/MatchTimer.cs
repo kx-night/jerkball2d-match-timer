@@ -86,7 +86,7 @@ public sealed class MatchTimer
     {
         if (IsCompleted)
         {
-            ResetAndPlay();
+            Restart();
             return;
         }
 
@@ -99,7 +99,7 @@ public sealed class MatchTimer
         (IsRunning, IsPaused) = (false, true);
     }
 
-    public void ResetAndPlay()
+    public void Restart()
     {
         (Elapsed, IsRunning, IsPaused) = (0f, true, false);
         _lastDisplayedSecond = -1;
@@ -108,7 +108,7 @@ public sealed class MatchTimer
     public void ResetTo(float seconds)
     {
         Duration = SanitizeDuration(seconds);
-        ResetAndPlay();
+        Restart();
     }
 
     public void Update(float deltaTime)
