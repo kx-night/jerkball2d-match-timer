@@ -30,6 +30,14 @@ namespace Jerkball2D;
 /// <remarks>
 /// WARNING: This timer maintains mutable state and is not thread-safe.
 /// Use it from a single thread or protect access with external synchronization.
+///
+/// Usage guidelines:
+/// 1. Read the clock string before numeric values. When updating UI,
+///    read <see cref="DigitalClock"/> before accessing the numeric properties.
+/// 2. Avoid using numeric properties for game logic. The <c>_minutes</c> and
+///    <c>_seconds</c> fields are updated only inside the <see cref="DigitalClock"/>
+///    property. Reading <see cref="Minutes"/> or <see cref="Seconds"/> without
+///    reading <see cref="DigitalClock"/> first may return stale values.
 /// </remarks>
 public sealed class MatchTimer
 {
@@ -57,7 +65,6 @@ public sealed class MatchTimer
 
     public int Minutes => _minutes;
     public int Seconds => _seconds;
-
 
     public string DigitalClock
     {
