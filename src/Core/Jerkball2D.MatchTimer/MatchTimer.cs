@@ -103,9 +103,6 @@ public sealed class MatchTimer
     {
         (Elapsed, IsRunning, IsPaused) = (0f, true, false);
         _lastDisplayedSecond = -1;
-        _minutes = 0;
-        _seconds = 0;
-        _cachedClockText = "00:00";
     }
 
     public void ResetTo(float seconds)
