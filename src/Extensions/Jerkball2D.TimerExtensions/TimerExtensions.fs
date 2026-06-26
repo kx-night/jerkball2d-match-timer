@@ -6,9 +6,6 @@
 //
 // Copyright (c) 2026 kx-night
 
-// global using MyAwesomeGame = global::Jerkball2D;
-// global using static global::Jerkball2D.TimerExtensions.MatchTimerController;
-// global using static global::Jerkball2D.TimerExtensions.TimerTypes.TimerState;
 namespace Jerkball2D.TimerExtensions
 
 open System
@@ -26,21 +23,20 @@ module TimerTypes =
 module MatchTimerActivePatterns =
     open TimerTypes
 
-    [<return: Struct>]
     let (|CurrentState|) (timer: MatchTimer) =
-        if timer.IsCompleted then Completed
-        elif timer.IsPaused then Paused
-        elif timer.IsRunning then Running
-        else Idle
+        if timer.IsCompleted then TimerState.Completed
+        elif timer.IsPaused then TimerState.Paused
+        elif timer.IsRunning then TimerState.Running
+        else TimerState.Idle
 
 module MatchTimerController =
     open TimerTypes
 
     let inline tick (deltaTime: single) (timer: MatchTimer) : TimerState =
         match timer with
-        | CurrentState Running ->
+        | CurrentState TimerState.Running ->
             timer.Update deltaTime
-            if timer.IsCompleted then Completed else Running
+            if timer.IsCompleted then TimerState.Completed else TimerState.Running
         | CurrentState state ->
             state
 
@@ -56,13 +52,12 @@ module MatchTimerController =
         timer.ResetAndPlay()
         timer
 
-    let onFinished (callback: unit -> unit) (timer: MatchTimer) : IDisposable =
-        let handler = Action callback
-        timer.OnCompleted.AddHandler handler
+    let onFinished (callback: Action) (timer: MatchTimer) : IDisposable =
+        timer.add_OnCompleted callback
 
         { new IDisposable with
             member _.Dispose() =
-                timer.OnCompleted.RemoveHandler handler }
+                timer.remove_OnCompleted callback }
 
     let tryResetTo (seconds: single) (timer: MatchTimer) : Result<MatchTimer, string> =
         try

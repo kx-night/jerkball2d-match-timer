@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Jerkball2D.MatchTimer\Jerkball2D.MatchTimer.csproj" />
+    <ProjectReference Include="..\..\Extensions\Jerkball2D.TimerExtensions\Jerkball2D.TimerExtensions.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

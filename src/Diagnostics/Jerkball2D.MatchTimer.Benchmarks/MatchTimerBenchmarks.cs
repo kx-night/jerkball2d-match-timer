@@ -2,7 +2,7 @@
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
-// file, You can obtain one at [https://mozilla.org/MPL/2.0/](https://mozilla.org/MPL/2.0/).
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
 //
 // Copyright (c) 2026 kx-night
 
@@ -264,7 +264,7 @@ public sealed class TimerExtensionsBenchmark
 
         for (int i = 0; i < LoopCount; i++)
         {
-            var timer = resetAndPlay(_runningTimer);
+            MatchTimer timer = resetAndPlay(_runningTimer);
             timer = pause(timer);
             timer = play(timer);
 
