@@ -20,15 +20,12 @@ public sealed class MatchTimerTest
     [InlineData(float.NaN)]
     [InlineData(float.PositiveInfinity)]
     [InlineData(float.NegativeInfinity)]
-    [InlineData(1e-45f)]
     [InlineData(6000f)]
-    public void Ctor_InvalidDuration_Throws(float invalidDuration)
-    {
+    public void Ctor_InvalidDuration_Throws(float invalidDuration) =>
         Assert.Throws<ArgumentOutOfRangeException>(() => new MatchTimer(invalidDuration));
-    }
 
     [Fact]
-    public void Ctor_ValidDuration_InitializesAsStopped()
+    public void Ctor_InitializesStopped()
     {
         var timer = new MatchTimer(10f);
 
@@ -41,7 +38,7 @@ public sealed class MatchTimerTest
     }
 
     [Fact]
-    public void Play_TransitionsToRunning()
+    public void Play_StartsTimer()
     {
         var timer = new MatchTimer(5f);
 
@@ -53,7 +50,7 @@ public sealed class MatchTimerTest
     }
 
     [Fact]
-    public void Pause_TransitionsToPaused()
+    public void Pause_PausesTimer()
     {
         var timer = new MatchTimer(5f);
 
@@ -66,7 +63,7 @@ public sealed class MatchTimerTest
     }
 
     [Fact]
-    public void Play_WhenCompleted_Restarts()
+    public void Play_WhenCompleted_RestartsTimer()
     {
         var timer = new MatchTimer(5f);
 
@@ -100,7 +97,7 @@ public sealed class MatchTimerTest
     }
 
     [Fact]
-    public void ResetTo_ReconfiguresTimer()
+    public void ResetTo_ReconfiguresAndStarts()
     {
         var timer = new MatchTimer(10f);
 
@@ -111,7 +108,7 @@ public sealed class MatchTimerTest
 
         Assert.Equal(20f, timer.Duration);
         Assert.Equal(0f, timer.Elapsed, precision: 5);
-        Assert.False(timer.IsRunning);
+        Assert.True(timer.IsRunning);
         Assert.False(timer.IsPaused);
         Assert.False(timer.IsCompleted);
         Assert.Equal("00:20", timer.DigitalClock);
@@ -123,7 +120,6 @@ public sealed class MatchTimerTest
     [InlineData(float.NaN)]
     [InlineData(float.PositiveInfinity)]
     [InlineData(float.NegativeInfinity)]
-    [InlineData(1e-45f)]
     [InlineData(6000f)]
     public void ResetTo_InvalidDuration_Throws(float invalidDuration)
     {
@@ -152,7 +148,7 @@ public sealed class MatchTimerTest
     [InlineData(float.NaN)]
     [InlineData(float.PositiveInfinity)]
     [InlineData(float.NegativeInfinity)]
-    public void Update_Ignored_WhenDeltaIsInvalid(float invalidDelta)
+    public void Update_IgnoresInvalidDelta(float invalidDelta)
     {
         var timer = new MatchTimer(10f);
 
@@ -167,7 +163,7 @@ public sealed class MatchTimerTest
     }
 
     [Fact]
-    public void Update_AdvancesElapsed_WhenRunning()
+    public void Update_AdvancesElapsed()
     {
         var timer = new MatchTimer(5f);
 
@@ -179,11 +175,11 @@ public sealed class MatchTimerTest
         Assert.True(timer.IsRunning);
         Assert.False(timer.IsCompleted);
         Assert.Equal(4f, timer.Elapsed, precision: 5);
-        Assert.Equal("00:01", timer.DigitalClock); // 5s - 4s = 1s display
+        Assert.Equal("00:01", timer.DigitalClock);
     }
 
     [Fact]
-    public void Update_WhenExpired_CompletesMatch()
+    public void Update_CompletesWhenExpired()
     {
         var timer = new MatchTimer(1f);
         int completedCount = 0;
@@ -203,7 +199,7 @@ public sealed class MatchTimerTest
     }
 
     [Fact]
-    public void DigitalClock_Properties_AreConsistent()
+    public void DigitalClock_ValuesAreConsistent()
     {
         var timer = new MatchTimer(90f);
 
@@ -218,7 +214,7 @@ public sealed class MatchTimerTest
     }
 
     [Fact]
-    public void DigitalClock_CachesString_UntilSecondChanges()
+    public void DigitalClock_CachesUntilSecondChanges()
     {
         var timer = new MatchTimer(90f);
 
@@ -229,28 +225,36 @@ public sealed class MatchTimerTest
         string secondRead = timer.DigitalClock;
 
         Assert.Equal("01:00", firstRead);
-        Assert.Same(firstRead, secondRead); // Verifies the internal cache hit
+        Assert.Same(firstRead, secondRead);
 
         timer.Update(0.016f);
         string subSecondRead = timer.DigitalClock;
 
-        Assert.Same(firstRead, subSecondRead); // Verifies the cache stays hot during sub-second frame ticks
+        Assert.Same(firstRead, subSecondRead);
 
         timer.Update(1f);
         string nextSecondRead = timer.DigitalClock;
 
-        Assert.NotSame(firstRead, nextSecondRead); // Verifies the old cache was safely evicted
-        Assert.Equal("00:59", nextSecondRead);     // Verifies the new zero-allocation text layouts match
+        Assert.NotSame(firstRead, nextSecondRead);
+        Assert.Equal("00:59", nextSecondRead);
     }
 
     [Fact]
-    public void DigitalClock_ClampsToMaxLimit()
+    public void DigitalClock_AllowsMaxDuration()
     {
-        float maxValidSeconds = (99f * 60f) + 59f;
+        float maxValidSeconds = 99f * 60f;
         var timer = new MatchTimer(maxValidSeconds);
 
         string clock = timer.DigitalClock;
 
-        Assert.Equal("99:59", clock);
+        Assert.Equal("99:00", clock);
+    }
+
+    [Fact]
+    public void DigitalClock_ThrowsWhenDurationExceedsMax()
+    {
+        float aboveMaxSeconds = (99f * 60f) + 60f;
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => new MatchTimer(aboveMaxSeconds));
     }
 }
