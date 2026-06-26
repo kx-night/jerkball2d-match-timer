@@ -7,8 +7,8 @@
 // Copyright (c) 2026 kx-night
 
 using System;
-using Jerkball2D;
 using Xunit;
+using Jerkball2D;
 
 namespace Jerkball2dMatchTimer.Tests;
 
@@ -22,7 +22,8 @@ public sealed class MatchTimerTest
     [InlineData(float.NegativeInfinity)]
     [InlineData(6000f)]
     public void Ctor_InvalidDuration_Throws(float invalidDuration) =>
-        Assert.Throws<ArgumentOutOfRangeException>(() => new MatchTimer(invalidDuration));
+        Assert.Throws<ArgumentOutOfRangeException>(
+            () => new MatchTimer(invalidDuration));
 
     [Fact]
     public void Ctor_InitializesStopped()
@@ -125,7 +126,8 @@ public sealed class MatchTimerTest
     {
         var timer = new MatchTimer(10f);
 
-        Assert.Throws<ArgumentOutOfRangeException>(() => timer.ResetTo(invalidDuration));
+        Assert.Throws<ArgumentOutOfRangeException>(
+            () => timer.ResetTo(invalidDuration));
     }
 
     [Fact]
@@ -255,6 +257,7 @@ public sealed class MatchTimerTest
     {
         float aboveMaxSeconds = (99f * 60f) + 60f;
 
-        Assert.Throws<ArgumentOutOfRangeException>(() => new MatchTimer(aboveMaxSeconds));
+        Assert.Throws<ArgumentOutOfRangeException>(
+            () => new MatchTimer(aboveMaxSeconds));
     }
 }
