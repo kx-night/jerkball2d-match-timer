@@ -28,7 +28,7 @@ namespace Jerkball2D;
 /// Countdown timer for tracking match duration and playback states.
 /// </summary>
 /// <remarks>
-/// WARNING: This timer maintains mutable state and is not thread-safe.
+/// This timer maintains mutable state and is not thread-safe.
 /// Use it from a single thread or protect access with external synchronization.
 /// </remarks>
 public sealed class MatchTimer
