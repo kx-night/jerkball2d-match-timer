@@ -30,14 +30,6 @@ namespace Jerkball2D;
 /// <remarks>
 /// WARNING: This timer maintains mutable state and is not thread-safe.
 /// Use it from a single thread or protect access with external synchronization.
-///
-/// Usage guidelines:
-/// 1. Read the clock string before numeric values. When updating UI,
-///    read <see cref="DigitalClock"/> before accessing the numeric properties.
-/// 2. Avoid using numeric properties for game logic. The <c>_minutes</c> and
-///    <c>_seconds</c> fields are updated only inside the <see cref="DigitalClock"/>
-///    property. Reading <see cref="Minutes"/> or <see cref="Seconds"/> without
-///    reading <see cref="DigitalClock"/> first may return stale values.
 /// </remarks>
 public sealed class MatchTimer
 {
@@ -63,33 +55,29 @@ public sealed class MatchTimer
     public float Remaining => MathF.Max(0f, Duration - Elapsed);
     public int TotalRemainingSeconds => (int)MathF.Ceiling(Remaining);
 
-    public int Minutes => _minutes;
-    public int Seconds => _seconds;
+    public int Minutes
+    {
+        get
+        {
+            SyncTime();
+            return _minutes;
+        }
+    }
+
+    public int Seconds
+    {
+        get
+        {
+            SyncTime();
+            return _seconds;
+        }
+    }
 
     public string DigitalClock
     {
         get
         {
-            int currentSeconds = TotalRemainingSeconds;
-
-            if (currentSeconds != _lastDisplayedSecond)
-            {
-                _lastDisplayedSecond = currentSeconds;
-
-                _minutes = Math.Min(currentSeconds / 60, MaxClockMinutes);
-                _seconds = currentSeconds % 60;
-
-                _cachedClockText = string.Create(
-                    5,
-                    (_minutes, _seconds),
-                    static (clockBuffer, time) =>
-                    {
-                        time.Item1.TryFormat(clockBuffer[..2], out _, "D2", CultureInfo.InvariantCulture);
-                        clockBuffer[2] = ':';
-                        time.Item2.TryFormat(clockBuffer[3..], out _, "D2", CultureInfo.InvariantCulture);
-                    });
-            }
-
+            SyncTime();
             return _cachedClockText;
         }
     }
@@ -115,6 +103,9 @@ public sealed class MatchTimer
     {
         (Elapsed, IsRunning, IsPaused) = (0f, true, false);
         _lastDisplayedSecond = -1;
+        _minutes = 0;
+        _seconds = 0;
+        _cachedClockText = "00:00";
     }
 
     public void ResetTo(float seconds)
@@ -138,6 +129,29 @@ public sealed class MatchTimer
             IsRunning = false;
             OnCompleted?.Invoke();
         }
+    }
+
+    private void SyncTime()
+    {
+        int currentSeconds = TotalRemainingSeconds;
+
+        if (currentSeconds == _lastDisplayedSecond)
+            return;
+
+        _lastDisplayedSecond = currentSeconds;
+
+        _minutes = Math.Min(currentSeconds / 60, MaxClockMinutes);
+        _seconds = currentSeconds % 60;
+
+        _cachedClockText = string.Create(
+            5,
+            (_minutes, _seconds),
+            static (clockBuffer, time) =>
+            {
+                time.Item1.TryFormat(clockBuffer[..2], out _, "D2", CultureInfo.InvariantCulture);
+                clockBuffer[2] = ':';
+                time.Item2.TryFormat(clockBuffer[3..], out _, "D2", CultureInfo.InvariantCulture);
+            });
     }
 
     private static float SanitizeDuration(float seconds) =>
