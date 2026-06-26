@@ -38,6 +38,9 @@ public sealed class MatchTimer
     private int _lastDisplayedSecond = -1;
     private string _cachedClockText = "00:00";
 
+    private int _minutes;
+    private int _seconds;
+
     public MatchTimer(float seconds) =>
         Duration = SanitizeDuration(seconds);
 
@@ -52,6 +55,10 @@ public sealed class MatchTimer
     public float Remaining => MathF.Max(0f, Duration - Elapsed);
     public int TotalRemainingSeconds => (int)MathF.Ceiling(Remaining);
 
+    public int Minutes => _minutes;
+    public int Seconds => _seconds;
+
+
     public string DigitalClock
     {
         get
@@ -62,15 +69,18 @@ public sealed class MatchTimer
             {
                 _lastDisplayedSecond = currentSeconds;
 
-                int mins = Math.Min(currentSeconds / 60, MaxClockMinutes);
-                int secs = currentSeconds % 60;
+                _minutes = Math.Min(currentSeconds / 60, MaxClockMinutes);
+                _seconds = currentSeconds % 60;
 
-                _cachedClockText = string.Create(5, (mins, secs), static (clockBuffer, time) =>
-                {
-                    time.mins.TryFormat(clockBuffer[..2], out _, "D2", CultureInfo.InvariantCulture);
-                    clockBuffer[2] = ':';
-                    time.secs.TryFormat(clockBuffer[3..], out _, "D2", CultureInfo.InvariantCulture);
-                });
+                _cachedClockText = string.Create(
+                    5,
+                    (_minutes, _seconds),
+                    static (clockBuffer, time) =>
+                    {
+                        time.Item1.TryFormat(clockBuffer[..2], out _, "D2", CultureInfo.InvariantCulture);
+                        clockBuffer[2] = ':';
+                        time.Item2.TryFormat(clockBuffer[3..], out _, "D2", CultureInfo.InvariantCulture);
+                    });
             }
 
             return _cachedClockText;
