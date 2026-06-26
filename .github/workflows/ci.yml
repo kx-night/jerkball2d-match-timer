@@ -39,10 +39,6 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
           cache: true
-          cache-dependency-path: |
-            **/*.csproj
-            **/*.fsproj
-            **/Directory.Build.props
 
       - name: Restore Solution Dependencies
         run: dotnet restore Jerkball2D.MatchTimer.slnx
