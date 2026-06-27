@@ -6,8 +6,6 @@
   "dotnet.inlayHints.enableInlayHintsForTypes": true,
   "dotnet.codeLens.enableReferencesCodeLens": true,
   "dotnet.codeLens.enableTestsCodeLens": true,
-  "csharp.referencesCodeLens.enabled": true,
-  "csharp.testsCodeLens.enabled": true,
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
