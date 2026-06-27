@@ -11,7 +11,7 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
 using Jerkball2D;
 
-namespace Jerkball2D.MatchTimer.Benchmarks;
+namespace Jerkball2D.MatchTimer.Benchs;
 
 [MemoryDiagnoser]
 [SimpleJob(RunStrategy.Throughput, launchCount: 1, warmupCount: 5, iterationCount: 20)]
