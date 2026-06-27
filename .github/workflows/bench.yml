@@ -33,11 +33,11 @@ jobs:
             **/Directory.Build.props
 
       - name: Restore Dependencies
-        run: dotnet restore
+        run: dotnet restore Jerkball2D.MatchTimer.Benchmarks.csproj
         working-directory: src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks
 
-      - name: Execute Performance Verification
-        run: dotnet run -c Release -- --exporters json md csv --filter "*"
+      - name: Execute Performance Verification (net8.0)
+        run: dotnet run -c Release -f net8.0 --no-restore -- --exporters json md csv --filter "*"
         working-directory: src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks
 
       - name: Upload Performance Reports
