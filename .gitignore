@@ -1,3 +1,97 @@
+# ============================
+# OS Junk
+# ============================
 .DS_Store
-bin/
-obj/
+Thumbs.db
+*.tmp
+*.log
+*.pid
+
+# ============================
+# Editor Backups / Temp Files
+# ============================
+*.swp
+*.*~
+*.swo
+*.swn
+
+# ============================
+# .NET Build Artifacts
+# ============================
+[Bb]in/
+[Oo]bj/
+artifacts/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Oo]ut/
+
+# Build logs
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+# ============================
+# NuGet / Package Management
+# ============================
+*.nupkg
+*.snupkg
+nupkg/
+packages/
+project.lock.json
+*.nuget.props
+*.nuget.targets
+
+# ============================
+# Visual Studio
+# ============================
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.sln.ide
+
+# ============================
+# JetBrains Rider / Fleet
+# ============================
+.idea/
+.fleet/
+
+# ============================
+# Visual Studio Code
+# ============================
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# ============================
+# Code Rush (DevExpress)
+# ============================
+.cr/
+
+# ============================
+# Test Results
+# ============================
+TestResults/
+*.coverage
+*.trx
+
+# ============================
+# Benchmark Artifacts
+# ============================
+BenchmarkDotNet.Artifacts/
+
+# ============================
+# Azure DevOps / CI
+# ============================
+*.tmp
+*.pdb
+*.cache
