@@ -9,21 +9,12 @@
 using System;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
-using BenchmarkDotNet.Running;
 using Jerkball2D;
 using Jerkball2D.TimerExtensions;
 using static Jerkball2D.TimerExtensions.MatchTimerController;
 using static Jerkball2D.TimerExtensions.TimerTypes;
 
 namespace Jerkball2DMatchTimer.Benchmarks;
-
-public static class Program
-{
-    public static void Main(string[] args)
-    {
-        BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args);
-    }
-}
 
 [MemoryDiagnoser]
 [SimpleJob(RunStrategy.Throughput, launchCount: 1, warmupCount: 5, iterationCount: 20)]
