@@ -29,8 +29,9 @@ main() {
   echo "🚀 Restoring dependencies..."
   dotnet restore "${bench_project}"
 
-  echo "🔥 Launching BenchmarkDotNet Execution Suite..."
-  dotnet run -c Release -p "${bench_project}" -- \
+  # Note: -f net8.0 selects the target framework; tweak this to net9.0 or net10.0 to match your preferred SDK runtime.
+  echo "🔥 Launching BenchmarkDotNet Execution Suite (net8.0)..."
+  dotnet run -c Release -f net8.0 -p "${bench_project}" -- \
     --exporters json md csv \
     --filter '*'
 
