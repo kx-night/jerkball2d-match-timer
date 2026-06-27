@@ -2,13 +2,15 @@ $ErrorActionPreference = "Stop"
 
 function Main {
     param(
+        [ValidateSet("net8.0", "net9.0", "net10.0")]
         [string] $Framework = "net8.0"
     )
 
-    $ScriptDir  = Split-Path -Parent $MyInvocation.MyCommand.Path
-    $RepoRoot   = Split-Path -Parent $ScriptDir
-    $TargetDir  = Join-Path $RepoRoot "src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks"
-    $BenchProj  = Join-Path $TargetDir "Jerkball2D.MatchTimer.Benchmarks.csproj"
+    $ScriptDir   = Split-Path -Parent $MyInvocation.MyCommand.Path
+    $RepoRoot    = Split-Path -Parent $ScriptDir
+    $TargetDir   = Join-Path $RepoRoot "src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks"
+    $BenchProj   = Join-Path $TargetDir "Jerkball2D.MatchTimer.Benchmarks.csproj"
+    $OriginalDir = (Get-Location).Path
 
     if (-not (Get-Command dotnet -ErrorAction SilentlyContinue)) {
         Write-Error "❌ dotnet SDK not found on PATH. Please install .NET and try again."
@@ -25,19 +27,24 @@ function Main {
         exit 1
     }
 
-    Write-Host "⚙️  Stepping into diagnostics context..."
-    Set-Location $TargetDir
+    try {
+        Write-Host "⚙️  Stepping into diagnostics context..."
+        Set-Location $TargetDir
 
-    Write-Host "🚀 Restoring dependencies..."
-    dotnet restore "Jerkball2D.MatchTimer.Benchmarks.csproj"
+        Write-Host "🚀 Restoring dependencies..."
+        dotnet restore $BenchProj
 
-    # Note: -f selects the target framework; pass -Framework net9.0 or net10.0 to match your preferred SDK runtime.
-    Write-Host "🔥 Launching BenchmarkDotNet Execution Suite ($Framework)..."
-    dotnet run -c Release -f $Framework -- `
-        --exporters json md csv
+        # Note: -f selects the target framework; pass -Framework net9.0 or net10.0 to match your preferred SDK runtime.
+        Write-Host "🔥 Launching BenchmarkDotNet Execution Suite ($Framework)..."
+        dotnet run -c Release -f $Framework -- `
+            --exporters json md csv
 
-    Write-Host "✅ Execution complete! Performance artifacts generated in:"
-    Write-Host "   $TargetDir/BenchmarkDotNet.Artifacts/results/"
+        Write-Host "✅ Execution complete! Performance artifacts generated in:"
+        Write-Host "   $TargetDir/BenchmarkDotNet.Artifacts/results/"
+    }
+    finally {
+        Set-Location $OriginalDir
+    }
 }
 
 Main

@@ -9,6 +9,14 @@ main() {
   bench_project="Jerkball2D.MatchTimer.Benchmarks.csproj"
   framework="${1:-net8.0}"
 
+  case "${framework}" in
+    net8.0|net9.0|net10.0) ;;
+    *)
+      echo "❌ Invalid framework '${framework}'. Allowed: net8.0, net9.0, net10.0." >&2
+      exit 1
+      ;;
+  esac
+
   if ! command -v dotnet >/dev/null 2>&1; then
     echo "❌ dotnet SDK not found on PATH. Please install .NET and try again." >&2
     exit 1
@@ -25,7 +33,7 @@ main() {
   fi
 
   echo "⚙️  Stepping into diagnostics context..."
-  cd "${target_dir}"
+  pushd "${target_dir}" >/dev/null
 
   echo "🚀 Restoring dependencies..."
   dotnet restore "${bench_project}"
@@ -37,6 +45,8 @@ main() {
 
   echo "✅ Execution complete! Performance artifacts generated in:"
   echo "   ${target_dir}/BenchmarkDotNet.Artifacts/results/"
+
+  popd >/dev/null
 }
 
 main "$@"
