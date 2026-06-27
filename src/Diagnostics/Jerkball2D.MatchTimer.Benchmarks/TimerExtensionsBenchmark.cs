@@ -14,7 +14,7 @@ using Jerkball2D.TimerExtensions;
 using static Jerkball2D.TimerExtensions.MatchTimerController;
 using static Jerkball2D.TimerExtensions.TimerTypes;
 
-namespace Jerkball2DMatchTimer.Benchmarks;
+namespace Jerkball2.DMatchTimer.Benchmarks;
 
 [MemoryDiagnoser]
 [SimpleJob(RunStrategy.Throughput, launchCount: 1, warmupCount: 5, iterationCount: 20)]
