@@ -2,6 +2,7 @@
   "recommendations": [
     "ms-dotnettools.csharp",
     "ms-dotnettools.csdevkit",
+    "faldor20.fsharp-language-server-updated",
     "eamodio.gitlens",
     "editorconfig.editorconfig",
     "streetsidesoftware.code-spell-checker",
