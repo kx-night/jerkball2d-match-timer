@@ -8,7 +8,7 @@
 
 using BenchmarkDotNet.Running;
 
-namespace Jerkball2DMatchTimer.Benchmarks;
+namespace Jerkball2D.Benchmarks;
 
 public static class Program
 {
