@@ -10,7 +10,7 @@ using System;
 using Xunit;
 using Jerkball2D;
 
-namespace Jerkball2D.MatchTimer.Tests;
+namespace Jerkball2D.MatchTimer.UnitTests;
 
 public sealed class MatchTimerTest
 {
