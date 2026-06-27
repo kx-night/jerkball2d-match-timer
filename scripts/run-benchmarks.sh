@@ -2,11 +2,12 @@
 set -euo pipefail
 
 main() {
-  local script_dir repo_root target_dir bench_project
+  local script_dir repo_root target_dir bench_project framework
   script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
   repo_root="$(cd "${script_dir}/.." && pwd)"
   target_dir="${repo_root}/src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks"
-  bench_project="${target_dir}/Jerkball2D.MatchTimer.Benchmarks.csproj"
+  bench_project="Jerkball2D.MatchTimer.Benchmarks.csproj"
+  framework="${1:-net8.0}"
 
   if ! command -v dotnet >/dev/null 2>&1; then
     echo "❌ dotnet SDK not found on PATH. Please install .NET and try again." >&2
@@ -18,8 +19,8 @@ main() {
     exit 1
   fi
 
-  if [[ ! -f "${bench_project}" ]]; then
-    echo "❌ Benchmarks project file not found: ${bench_project}" >&2
+  if [[ ! -f "${target_dir}/${bench_project}" ]]; then
+    echo "❌ Benchmarks project file not found: ${target_dir}/${bench_project}" >&2
     exit 1
   fi
 
@@ -29,11 +30,10 @@ main() {
   echo "🚀 Restoring dependencies..."
   dotnet restore "${bench_project}"
 
-  # Note: -f net8.0 selects the target framework; tweak this to net9.0 or net10.0 to match your preferred SDK runtime.
-  echo "🔥 Launching BenchmarkDotNet Execution Suite (net8.0)..."
-  dotnet run -c Release -f net8.0 -p "${bench_project}" -- \
-    --exporters json md csv \
-    --filter '*'
+  # Note: -f selects the target framework; override via first arg (e.g. ./run-benchmarks.sh net9.0).
+  echo "🔥 Launching BenchmarkDotNet Execution Suite (${framework})..."
+  dotnet run -c Release -f "${framework}" -- \
+    --exporters json md csv
 
   echo "✅ Execution complete! Performance artifacts generated in:"
   echo "   ${target_dir}/BenchmarkDotNet.Artifacts/results/"
