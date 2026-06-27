@@ -17,6 +17,16 @@
         "src/Extensions/**/*.fsproj",
         "src/Diagnostics/**/*.csproj"
       ]
+    },
+    {
+      "name": "validate-commit-message",
+      "group": "commit-msg",
+      "command": "dotnet",
+      "args": [
+        "tools/CommitMessageValidator/CommitMessageValidator.dll",
+        "--commit-msg",
+        "${commitMsg}"
+      ]
     }
   ]
 }
