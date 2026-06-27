@@ -41,3 +41,11 @@ dotnet_naming_symbols.private_fields_symbols.applicable_accessibilities = privat
 
 dotnet_naming_style.prefix_camel_case_style.capitalization = camel_case
 dotnet_naming_style.prefix_camel_case_style.required_prefix = _
+
+[*.fs]
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+charset = utf-8
+end_of_line = lf
+trim_trailing_whitespace = true
