@@ -85,10 +85,7 @@ public sealed class MatchTimer
     public void Play()
     {
         if (IsCompleted)
-        {
-            Restart();
             return;
-        }
 
         IsRunning = true;
         IsPaused = false;
@@ -137,7 +134,7 @@ public sealed class MatchTimer
 
         _lastDisplayedSecond = currentSeconds;
 
-        _minutes = Math.Min(currentSeconds / 60, MaxClockMinutes);
+        _minutes = currentSeconds / 60;
         _seconds = currentSeconds % 60;
 
         _cachedClockText = string.Create(
