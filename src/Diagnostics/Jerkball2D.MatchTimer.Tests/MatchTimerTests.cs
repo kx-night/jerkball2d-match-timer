@@ -2,7 +2,7 @@
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
-// file, You can obtain one at [https://mozilla.org/MPL/2.0/](https://mozilla.org/MPL/2.0/).
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
 //
 // Copyright (c) 2026 kx-night
 
@@ -64,20 +64,21 @@ public sealed class MatchTimerTest
     }
 
     [Fact]
-    public void Play_WhenCompleted_RestartsTimer()
+    public void Play_WhenCompleted_DoesNothing()
     {
         var timer = new MatchTimer(5f);
 
         timer.Play();
         timer.Update(5f);
 
+        // Second Play() should be ignored once completed
         timer.Play();
 
-        Assert.True(timer.IsRunning);
-        Assert.False(timer.IsCompleted);
+        Assert.False(timer.IsRunning);
         Assert.False(timer.IsPaused);
-        Assert.Equal(0f, timer.Elapsed, precision: 5);
-        Assert.Equal("00:05", timer.DigitalClock);
+        Assert.True(timer.IsCompleted);
+        Assert.Equal(5f, timer.Elapsed, precision: 5);
+        Assert.Equal("00:00", timer.DigitalClock);
     }
 
     [Fact]
