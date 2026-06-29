@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Jerkball2D.MatchTimer.Benchmarks</RootNamespace>
+    <RootNamespace>Jerkball2D.Benchmarks</RootNamespace>
     <IsPackable>false</IsPackable>
     <Optimize>true</Optimize>
   </PropertyGroup>
