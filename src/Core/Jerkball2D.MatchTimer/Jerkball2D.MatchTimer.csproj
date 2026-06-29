@@ -3,8 +3,6 @@
   <PropertyGroup>
     <AssemblyName>Jerkball2D.MatchTimer</AssemblyName>
     <RootNamespace>Jerkball2D</RootNamespace>
-
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
 </Project>
