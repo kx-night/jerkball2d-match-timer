@@ -24,6 +24,15 @@ using System.Globalization;
 // while keeping this source file completely unchanged.
 namespace Jerkball2D;
 
+#if !NETSTANDARD2_1_OR_GREATER && !NETCOREAPP3_0_OR_GREATER
+internal static class MathF
+{
+    public static float Max(float a, float b) => Math.Max(a, b);
+    public static float Min(float a, float b) => Math.Min(a, b);
+    public static float Ceiling(float x) => (float)Math.Ceiling(x);
+}
+#endif
+
 /// <summary>
 /// Countdown timer for tracking match duration and playback states.
 /// </summary>
