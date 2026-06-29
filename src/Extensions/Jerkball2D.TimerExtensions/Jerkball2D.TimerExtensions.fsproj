@@ -3,9 +3,6 @@
   <PropertyGroup>
     <AssemblyName>Jerkball2D.TimerExtensions</AssemblyName>
     <RootNamespace>Jerkball2D.TimerExtensions</RootNamespace>
-
-    <AnalysisMode>Recommended</AnalysisMode>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
