@@ -59,10 +59,10 @@ public class MatchTimerBenchmark
 
         for (int loop = 0; loop < LoopCount; loop++)
         {
-            float delta = NextDelta() * 0.016f;
+            float deltaTime = NextDelta() * 0.016f;
             for (int i = 0; i < _timers.Length; i++)
             {
-                _timers[i].Update(delta);
+                _timers[i].Update(deltaTime);
                 totalElapsed += _timers[i].Elapsed;
             }
         }
@@ -77,10 +77,10 @@ public class MatchTimerBenchmark
 
         for (int loop = 0; loop < LoopCount; loop++)
         {
-            float delta = NextDelta();
+            float deltaTime = NextDelta();
             for (int i = 0; i < _timers.Length; i++)
             {
-                _timers[i].Update(delta);
+                _timers[i].Update(deltaTime);
                 totalElapsed += _timers[i].Elapsed;
             }
         }
@@ -97,10 +97,10 @@ public class MatchTimerBenchmark
         {
             for (int frame = 0; frame < 60; frame++)
             {
-                float delta = NextDelta() * 0.016f;
+                float deltaTime = NextDelta() * 0.016f;
                 for (int i = 0; i < _timers.Length; i++)
                 {
-                    _timers[i].Update(delta);
+                    _timers[i].Update(deltaTime);
                     totalElapsed += _timers[i].Elapsed;
                 }
             }
@@ -132,10 +132,10 @@ public class MatchTimerBenchmark
 
         for (int loop = 0; loop < LoopCount; loop++)
         {
-            float delta = NextDelta();
+            float deltaTime = NextDelta();
             for (int i = 0; i < _timers.Length; i++)
             {
-                _timers[i].Update(delta);
+                _timers[i].Update(deltaTime);
                 totalLength += _timers[i].DigitalClock.Length;
             }
         }
