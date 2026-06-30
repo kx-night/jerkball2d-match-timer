@@ -14,10 +14,10 @@ using Jerkball2D;
 namespace Jerkball2D.Benchmarks;
 
 [MemoryDiagnoser]
-[SimpleJob(RunStrategy.Throughput, launchCount: 1, warmupCount: 5, iterationCount: 20)]
+[MediumRunJob(RunStrategy.Throughput)]
 public class MatchTimerBenchmark
 {
-    private const int LoopCount = 1000;
+    private const int LoopCount = 100_000;
     private readonly Random _random = new(42);
 
     private MatchTimer[] _timers = null!;

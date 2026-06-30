@@ -17,10 +17,10 @@ using static Jerkball2D.TimerExtensions.TimerTypes;
 namespace Jerkball2D.Benchmarks;
 
 [MemoryDiagnoser]
-[SimpleJob(RunStrategy.Throughput, launchCount: 1, warmupCount: 5, iterationCount: 20)]
+[MediumRunJob(RunStrategy.Throughput)]
 public class TimerExtensionsBenchmark
 {
-    private const int LoopCount = 1000;
+    private const int LoopCount = 100_000;
 
     private MatchTimer _runningTimer = null!;
     private MatchTimer _pausedTimer = null!;
