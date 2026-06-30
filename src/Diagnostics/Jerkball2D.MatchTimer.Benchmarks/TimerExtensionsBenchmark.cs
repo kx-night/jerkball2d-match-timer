@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: MPL-2.0
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
-// License, v. 2.0. If a copy of the MPL was not distributed with this
-// file, See the LICENSE file in the repository root for more details.
+// License, v. 2.0. See the LICENSE file in the repository root for more details.
 //
 // Copyright (c) 2026 kx-night
 
 using System;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Engines;
 using Jerkball2D;
 using Jerkball2D.TimerExtensions;
 using static Jerkball2D.TimerExtensions.MatchTimerController;
@@ -26,6 +24,9 @@ public class TimerExtensionsBenchmark
     private MatchTimer _pausedTimer = null!;
     private Action _cachedCallback = null!;
 
+    private float[] _randomDeltas = null!;
+    private int _index;
+
     [GlobalSetup]
     public void GlobalSetup()
     {
@@ -36,6 +37,13 @@ public class TimerExtensionsBenchmark
         _pausedTimer.Pause();
 
         _cachedCallback = static () => { };
+
+        var random = new Random(42);
+        _randomDeltas = new float[1024];
+        for (int i = 0; i < _randomDeltas.Length; i++)
+        {
+            _randomDeltas[i] = random.NextSingle() * 2f;
+        }
     }
 
     [IterationSetup]
@@ -44,17 +52,19 @@ public class TimerExtensionsBenchmark
         _runningTimer.Restart();
         _pausedTimer.ResetTo(90f);
         _pausedTimer.Pause();
+
+        _index = 0;
     }
 
-    [Benchmark(OperationsPerInvoke = LoopCount)]
+    [Benchmark(Baseline = true, OperationsPerInvoke = LoopCount)]
     public TimerState FSharp_Tick_Running()
     {
         TimerState finalState = TimerState.Idle;
-        const float deltaTime = 0.016f;
 
         for (int i = 0; i < LoopCount; i++)
         {
-            finalState = tick(deltaTime, _runningTimer);
+            float delta = NextDelta() * 0.016f;
+            finalState = tick(delta, _runningTimer);
         }
 
         return finalState;
@@ -64,11 +74,11 @@ public class TimerExtensionsBenchmark
     public TimerState FSharp_Tick_Paused()
     {
         TimerState finalState = TimerState.Idle;
-        const float deltaTime = 0.016f;
 
         for (int i = 0; i < LoopCount; i++)
         {
-            finalState = tick(deltaTime, _pausedTimer);
+            float delta = NextDelta() * 0.016f;
+            finalState = tick(delta, _pausedTimer);
         }
 
         return finalState;
@@ -108,5 +118,11 @@ public class TimerExtensionsBenchmark
         }
 
         return lifecycleCount;
+    }
+
+    private float NextDelta()
+    {
+        int index = _index++ & (_randomDeltas.Length - 1);
+        return _randomDeltas[index];
     }
 }
