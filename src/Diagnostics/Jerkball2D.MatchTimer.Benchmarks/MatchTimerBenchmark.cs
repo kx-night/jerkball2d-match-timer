@@ -15,7 +15,7 @@ namespace Jerkball2D.Benchmarks;
 
 [MemoryDiagnoser]
 [SimpleJob(RunStrategy.Throughput, launchCount: 1, warmupCount: 5, iterationCount: 20)]
-public sealed class MatchTimerBenchmark
+public class MatchTimerBenchmark
 {
     private const int LoopCount = 1000;
     private readonly Random _random = new(42);
