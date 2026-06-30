@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MPL-2.0
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
-// License, v. 2.0. If a copy of the MPL was not distributed with this
-// file, See the LICENSE file in the repository root for more details.
+// License, v. 2.0. See the LICENSE file in the repository root for more details.
 //
 // Copyright (c) 2026 kx-night
 
@@ -17,7 +16,6 @@ namespace Jerkball2D.Benchmarks;
 public class MatchTimerBenchmark
 {
     private const int LoopCount = 10_000;
-    private readonly Random _random = new(42);
 
     private MatchTimer[] _timers = null!;
     private float[] _randomDeltas = null!;
@@ -35,10 +33,11 @@ public class MatchTimerBenchmark
             _timers[i] = new MatchTimer(90f);
         }
 
+        var random = new Random(42);
         _randomDeltas = new float[1024];
         for (int i = 0; i < _randomDeltas.Length; i++)
         {
-            _randomDeltas[i] = _random.NextSingle() * 2f;
+            _randomDeltas[i] = random.NextSingle() * 2f;
         }
     }
 
@@ -53,7 +52,7 @@ public class MatchTimerBenchmark
         }
     }
 
-    [Benchmark(OperationsPerInvoke = LoopCount)]
+    [Benchmark(Baseline = true, OperationsPerInvoke = LoopCount)]
     public float UpdateOnly_SmallDelta()
     {
         float totalElapsed = 0f;
