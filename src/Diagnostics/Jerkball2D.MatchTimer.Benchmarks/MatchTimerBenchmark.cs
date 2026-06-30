@@ -8,7 +8,6 @@
 
 using System;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Engines;
 using Jerkball2D;
 
 namespace Jerkball2D.Benchmarks;
