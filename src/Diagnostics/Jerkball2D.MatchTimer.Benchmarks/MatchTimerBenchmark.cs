@@ -14,7 +14,7 @@ using Jerkball2D;
 namespace Jerkball2D.Benchmarks;
 
 [MemoryDiagnoser]
-[MediumRunJob(RunStrategy.Throughput)]
+[MediumRunJob]
 public class MatchTimerBenchmark
 {
     private const int LoopCount = 100_000;
