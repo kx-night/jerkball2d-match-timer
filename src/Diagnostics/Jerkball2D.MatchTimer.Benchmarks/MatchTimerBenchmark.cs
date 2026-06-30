@@ -2,7 +2,7 @@
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
-// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+// file, See the LICENSE file in the repository root for more details.
 //
 // Copyright (c) 2026 kx-night
 
@@ -17,7 +17,7 @@ namespace Jerkball2D.Benchmarks;
 [MediumRunJob]
 public class MatchTimerBenchmark
 {
-    private const int LoopCount = 100_000;
+    private const int LoopCount = 10_000;
     private readonly Random _random = new(42);
 
     private MatchTimer[] _timers = null!;
