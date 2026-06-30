@@ -37,7 +37,7 @@ function Main {
         # Note: -f selects the target framework; pass -Framework net9.0 or net10.0 to match your preferred SDK runtime.
         Write-Host "🔥 Launching BenchmarkDotNet Execution Suite ($Framework)..."
         dotnet run -c Release -f $Framework -- `
-            --exporters json markdown csv --filter '*'
+            --exporters json markdown --filter '*'
 
         Write-Host "✅ Execution complete! Performance artifacts generated in:"
         Write-Host "   $TargetDir/BenchmarkDotNet.Artifacts/results/"

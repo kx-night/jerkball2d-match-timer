@@ -41,7 +41,7 @@ main() {
   # Note: -f selects the target framework; override via first arg (e.g. ./run-benchmarks.sh net9.0).
   echo "🔥 Launching BenchmarkDotNet Execution Suite (${framework})..."
   dotnet run -c Release -f "${framework}" -- \
-    --exporters json markdown csv --filter '*'
+    --exporters json markdown --filter '*'
 
   echo "✅ Execution complete! Performance artifacts generated in:"
   echo "   ${target_dir}/BenchmarkDotNet.Artifacts/results/"
