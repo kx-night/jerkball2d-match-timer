@@ -5,6 +5,8 @@
     <RootNamespace>Jerkball2D.Benchmarks</RootNamespace>
     <IsPackable>false</IsPackable>
     <Optimize>true</Optimize>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
 
   <ItemGroup>
