@@ -15,7 +15,7 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
 
-  <PropertyGroup> 
+  <PropertyGroup>
     <Authors>kx-night</Authors>
     <Company>Jerkball2D</Company>
     <RepositoryType>git</RepositoryType>
@@ -26,7 +26,7 @@
 
   <PropertyGroup>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <NoWarn>$(NoWarn);CA1707;IDE0022</NoWarn>
+    <NoWarn>$(NoWarn);CA1707;IDE0022;1591</NoWarn>
   </PropertyGroup>
 
 </Project>
