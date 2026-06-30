@@ -15,7 +15,7 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
 
-  <PropertyGroup>
+  <PropertyGroup> 
     <Authors>kx-night</Authors>
     <Company>Jerkball2D</Company>
     <RepositoryType>git</RepositoryType>
