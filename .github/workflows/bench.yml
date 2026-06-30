@@ -37,7 +37,7 @@ jobs:
         working-directory: src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks
 
       - name: Execute Performance Verification (net8.0)
-        run: dotnet run -c Release -f net8.0 --no-restore -- --exporters json md csv --filter "*"
+        run: dotnet run -c Release -f net8.0 --no-restore -- --exporters json markdown csv 
         working-directory: src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks
 
       - name: Upload Performance Reports
