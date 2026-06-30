@@ -63,8 +63,8 @@ public class TimerExtensionsBenchmark
 
         for (int i = 0; i < LoopCount; i++)
         {
-            float delta = NextDelta() * 0.016f;
-            finalState = tick(delta, _runningTimer);
+            float deltaTime = NextDelta() * 0.016f;
+            finalState = tick(deltaTime, _runningTimer);
         }
 
         return finalState;
@@ -77,8 +77,8 @@ public class TimerExtensionsBenchmark
 
         for (int i = 0; i < LoopCount; i++)
         {
-            float delta = NextDelta() * 0.016f;
-            finalState = tick(delta, _pausedTimer);
+            float deltaTime = NextDelta() * 0.016f;
+            finalState = tick(deltaTime, _pausedTimer);
         }
 
         return finalState;
