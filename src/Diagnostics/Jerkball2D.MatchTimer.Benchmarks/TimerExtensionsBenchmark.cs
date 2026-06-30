@@ -17,7 +17,7 @@ using static Jerkball2D.TimerExtensions.TimerTypes;
 namespace Jerkball2D.Benchmarks;
 
 [MemoryDiagnoser]
-[MediumRunJob(RunStrategy = RunStrategy.Throughput)]
+[MediumRunJob(RunStrategy.Throughput)]
 public class TimerExtensionsBenchmark
 {
     private const int LoopCount = 100_000;
