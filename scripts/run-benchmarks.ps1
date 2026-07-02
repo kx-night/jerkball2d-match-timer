@@ -3,14 +3,14 @@ $ErrorActionPreference = "Stop"
 function Main {
     param(
         [ValidateSet("net8.0", "net9.0", "net10.0")]
-        [string] $Framework = "net8.0"
+        [string] $Framework = "net8.0",
+        [string] $Filter = "*"
     )
 
-    $ScriptDir   = Split-Path -Parent $MyInvocation.MyCommand.Path
-    $RepoRoot    = Split-Path -Parent $ScriptDir
-    $TargetDir   = Join-Path $RepoRoot "src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks"
-    $BenchProj   = Join-Path $TargetDir "Jerkball2D.MatchTimer.Benchmarks.csproj"
-    $OriginalDir = (Get-Location).Path
+    $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+    $RepoRoot  = Split-Path -Parent $ScriptDir
+    $TargetDir = Join-Path $RepoRoot "src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks"
+    $BenchProj = Join-Path $TargetDir "Jerkball2D.MatchTimer.Benchmarks.csproj"
 
     if (-not (Get-Command dotnet -ErrorAction SilentlyContinue)) {
         Write-Error "❌ dotnet SDK not found on PATH. Please install .NET and try again."
@@ -29,22 +29,36 @@ function Main {
 
     try {
         Write-Host "⚙️  Stepping into diagnostics context..."
-        Set-Location $TargetDir
+        Push-Location $TargetDir
 
-        Write-Host "🚀 Restoring dependencies..."
-        dotnet restore $BenchProj
+        $dotnetArgs = @(
+            'run',
+            '-c', 'Release',
+            '-f', $Framework,
+            '--',
+            '--exporters', 'json', 'markdown',
+            '--filter', "$Filter"
+        )
 
-        # Note: -f selects the target framework; pass -Framework net9.0 or net10.0 to match your preferred SDK runtime.
-        Write-Host "🔥 Launching BenchmarkDotNet Execution Suite ($Framework)..."
-        dotnet run -c Release -f $Framework -- `
-            --exporters json markdown --filter '*'
+        Write-Host "🔥 Launching BenchmarkDotNet Execution Suite ($Framework, filter='$Filter')..."
+        dotnet @dotnetArgs
 
         Write-Host "✅ Execution complete! Performance artifacts generated in:"
         Write-Host "   $TargetDir/BenchmarkDotNet.Artifacts/results/"
     }
     finally {
-        Set-Location $OriginalDir
+        Pop-Location
     }
 }
 
-Main
+if ($args -contains '-h' -or $args -contains '--help') {
+    Write-Host @"
+Usage: $($MyInvocation.MyCommand.Name) [framework] [filter]
+
+  framework   - net8.0, net9.0, net10.0 (default: net8.0)
+  filter      - BenchmarkDotNet glob pattern (default: *)
+"@
+    exit 0
+}
+
+Main @args
