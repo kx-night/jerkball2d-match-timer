@@ -1,6 +1,5 @@
 {
   "recommendations": [
-    "ms-dotnettools.csharp",
     "ms-dotnettools.csdevkit",
     "faldor20.fsharp-language-server-updated",
     "eamodio.gitlens",
@@ -8,7 +7,6 @@
     "streetsidesoftware.code-spell-checker",
     "github.vscode-github-actions",
     "davidanson.vscode-markdownlint",
-    "formulahendry.dotnet-test-explorer",
     "ms-dotnettools.vscode-dotnet-runtime"
   ],
   "unwantedRecommendations": []
