@@ -6,7 +6,16 @@
   "dotnet.inlayHints.enableInlayHintsForTypes": true,
   "dotnet.codeLens.enableReferencesCodeLens": true,
   "dotnet.codeLens.enableTestsCodeLens": true,
+  "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
   "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.formatOnPaste": true,
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp"
+  },
+  "[fsharp]": {
+    "editor.defaultFormatter": "faldor20.fsharp-language-server-updated"
+  },
   "editor.codeActionsOnSave": {
     "source.organizeImports": "explicit"
   },
@@ -18,20 +27,27 @@
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.expand": false,
   "explorer.fileNesting.patterns": {
-    "*.cs": "$(capture).Designer.cs, $(capture).g.cs",
-    "*.csproj": "*.user, *.nuget.g.props, *.nuget.g.targets, launchSettings.json"
+    "*.cs": "$(capture).Designer.cs, $(capture).g.cs, $(capture).g.i.cs",
+    "*.csproj": "*.user, *.nuget.g.props, *.nuget.g.targets, launchSettings.json",
+    "*.fs": "$(capture).fsi, $(capture).fsx",
+    "*.fsproj": "*.user, launchSettings.json"
   },
   "files.exclude": {
     "**/bin": true,
     "**/obj": true,
     "**/.git": true,
     "**/.DS_Store": true,
-    "**/.vscode": false
+    "**/.vscode": false,
+    "**/BenchmarkDotNet.Artifacts": true,
+    "**/TestResults": true
   },
   "search.exclude": {
     "**/bin": true,
     "**/obj": true,
     "**/.git": true,
-    "**/.DS_Store": true
-  }
+    "**/.DS_Store": true,
+    "**/BenchmarkDotNet.Artifacts": true,
+    "**/TestResults": true
+  },
+  "csharp.semanticHighlighting.enabled": true
 }
