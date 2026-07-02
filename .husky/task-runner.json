@@ -4,18 +4,31 @@
       "name": "dotnet-format-staged",
       "group": "pre-commit",
       "command": "dotnet",
-      "args": [ "format", "--no-restore", "--include", "${staged}" ],
-      "include": [ "**/*.cs" ]
+      "args": [
+        "format",
+        "Jerkball2D.MatchTimer.slnx",
+        "--no-restore",
+        "--include",
+        "${staged}"
+      ],
+      "include": [
+        "**/*.cs"
+      ]
     },
     {
       "name": "dotnet-test",
       "group": "pre-commit",
       "command": "dotnet",
-      "args": [ "test", "--no-build", "--verbosity", "minimal" ],
+      "args": [
+        "test",
+        "Jerkball2D.MatchTimer.slnx",
+        "--no-build",
+        "--verbosity",
+        "minimal"
+      ],
       "include": [
-        "src/Core/**/*.csproj",
-        "src/Extensions/**/*.fsproj",
-        "src/Diagnostics/**/*.csproj"
+        "src/**/*.Tests.csproj",
+        "src/**/*.Test.fsproj"
       ]
     },
     {
@@ -26,6 +39,9 @@
         "tools/CommitMessageValidator/CommitMessageValidator.dll",
         "--commit-msg",
         "${commitMsg}"
+      ],
+      "include": [
+        "tools/CommitMessageValidator/CommitMessageValidator.dll"
       ]
     }
   ]
