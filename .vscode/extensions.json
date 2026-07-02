@@ -7,7 +7,9 @@
     "streetsidesoftware.code-spell-checker",
     "github.vscode-github-actions",
     "davidanson.vscode-markdownlint",
-    "ms-dotnettools.vscode-dotnet-runtime"
+    "ms-dotnettools.vscode-dotnet-runtime",
+    "ms-vscode.powershell",
+    "redhat.vscode-yaml"
   ],
   "unwantedRecommendations": []
 }
