@@ -2,12 +2,15 @@
 set -euo pipefail
 
 main() {
-  local script_dir repo_root target_dir bench_project framework
+  local script_dir repo_root target_dir bench_project framework filter
+
   script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
   repo_root="$(cd "${script_dir}/.." && pwd)"
   target_dir="${repo_root}/src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks"
   bench_project="Jerkball2D.MatchTimer.Benchmarks.csproj"
+
   framework="${1:-net8.0}"
+  filter="${2:-*}"
 
   case "${framework}" in
     net8.0|net9.0|net10.0) ;;
@@ -34,19 +37,15 @@ main() {
 
   echo "⚙️  Stepping into diagnostics context..."
   pushd "${target_dir}" >/dev/null
+  trap 'popd >/dev/null 2>&1 || true' EXIT
 
-  echo "🚀 Restoring dependencies..."
-  dotnet restore "${bench_project}"
-
-  # Note: -f selects the target framework; override via first arg (e.g. ./run-benchmarks.sh net9.0).
-  echo "🔥 Launching BenchmarkDotNet Execution Suite (${framework})..."
+  echo "🔥 Launching BenchmarkDotNet Execution Suite (${framework}, filter='${filter}')..."
   dotnet run -c Release -f "${framework}" -- \
-    --exporters json markdown --filter '*'
+    --exporters json markdown \
+    --filter "${filter}"
 
   echo "✅ Execution complete! Performance artifacts generated in:"
   echo "   ${target_dir}/BenchmarkDotNet.Artifacts/results/"
-
-  popd >/dev/null
 }
 
 main "$@"
