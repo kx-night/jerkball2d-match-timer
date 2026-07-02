@@ -48,14 +48,15 @@ project.lock.json
 *.nuget.targets
 
 # ============================
-# Visual Studio
+# Visual Studio & IDE User Settings
 # ============================
 .vs/
 *.suo
 *.user
-*.userosscache
 *.sln.docstates
 *.sln.ide
+_ReSharper.Caches/
+*.DotSettings.user
 
 # ============================
 # JetBrains Rider / Fleet
@@ -78,11 +79,13 @@ project.lock.json
 .cr/
 
 # ============================
-# Test Results
+# Test & Code Coverage Results
 # ============================
 TestResults/
 *.coverage
 *.trx
+*.coverlet
+*.cobertura.xml
 
 # ============================
 # Benchmark Artifacts
@@ -92,6 +95,5 @@ BenchmarkDotNet.Artifacts/
 # ============================
 # Azure DevOps / CI
 # ============================
-*.tmp
 *.pdb
 *.cache
