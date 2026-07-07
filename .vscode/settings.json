@@ -38,8 +38,8 @@
     "**/.git": true,
     "**/.DS_Store": true,
     "**/.vscode": false,
-    "**/BenchmarkDotNet.Artifacts": true,
-    "**/TestResults": true
+    "**/BenchmarkDotNet.Artifacts": false,
+    "**/TestResults": false
   },
   "search.exclude": {
     "**/bin": true,

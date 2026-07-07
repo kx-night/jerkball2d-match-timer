@@ -4,32 +4,35 @@ function Main {
     param(
         [ValidateSet("net8.0", "net9.0", "net10.0")]
         [string] $Framework = "net8.0",
+
         [string] $Filter = "*"
     )
 
-    $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-    $RepoRoot  = Split-Path -Parent $ScriptDir
+    $ScriptDir = $PSScriptRoot
+    if ([string]::IsNullOrWhiteSpace($ScriptDir)) {
+        throw "Unable to determine script directory via PSScriptRoot."
+    }
+
+    $RepoRoot = Split-Path -Parent $ScriptDir
     $TargetDir = Join-Path $RepoRoot "src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks"
     $BenchProj = Join-Path $TargetDir "Jerkball2D.MatchTimer.Benchmarks.csproj"
 
     if (-not (Get-Command dotnet -ErrorAction SilentlyContinue)) {
-        Write-Error "❌ dotnet SDK not found on PATH. Please install .NET and try again."
-        exit 1
+        throw "❌ dotnet SDK not found on PATH. Please install .NET and try again."
     }
 
-    if (-not (Test-Path -Path $TargetDir -PathType Container)) {
-        Write-Error "❌ Benchmarks directory not found: $TargetDir"
-        exit 1
+    if (-not (Test-Path -LiteralPath $TargetDir -PathType Container)) {
+        throw "❌ Benchmarks directory not found: $TargetDir"
     }
 
-    if (-not (Test-Path -Path $BenchProj -PathType Leaf)) {
-        Write-Error "❌ Benchmarks project file not found: $BenchProj"
-        exit 1
+    if (-not (Test-Path -LiteralPath $BenchProj -PathType Leaf)) {
+        throw "❌ Benchmarks project file not found: $BenchProj"
     }
 
+    Push-Location $TargetDir
     try {
         Write-Host "⚙️  Stepping into diagnostics context..."
-        Push-Location $TargetDir
+        Write-Host "🔥 Launching BenchmarkDotNet Execution Suite ($Framework, filter='$Filter')..."
 
         $dotnetArgs = @(
             'run',
@@ -37,13 +40,12 @@ function Main {
             '-f', $Framework,
             '--',
             '--exporters', 'json', 'markdown',
-            '--filter', "$Filter"
+            "--filter=$Filter"
         )
 
-        Write-Host "🔥 Launching BenchmarkDotNet Execution Suite ($Framework, filter='$Filter')..."
-        dotnet @dotnetArgs
+        & dotnet @dotnetArgs
 
-        Write-Host "✅ Execution complete! Performance artifacts generated in:"
+        Write-Host "✅ Execution complete! Artifacts generated at:"
         Write-Host "   $TargetDir/BenchmarkDotNet.Artifacts/results/"
     }
     finally {
@@ -51,12 +53,12 @@ function Main {
     }
 }
 
-if ($args -contains '-h' -or $args -contains '--help') {
+if ($args.Count -gt 0 -and ($args[0] -in @('-h', '--help'))) {
     Write-Host @"
-Usage: $($MyInvocation.MyCommand.Name) [framework] [filter]
+Usage: pwsh ./scripts/run-benchmarks.ps1 [framework] [filter]
 
-  framework   - net8.0, net9.0, net10.0 (default: net8.0)
-  filter      - BenchmarkDotNet glob pattern (default: *)
+  framework   net8.0, net9.0, net10.0   Default: net8.0
+  filter      BenchmarkDotNet glob      Default: *
 "@
     exit 0
 }
