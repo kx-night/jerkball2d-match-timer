@@ -21,26 +21,31 @@ jobs:
         shell: bash
 
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout repository
+        uses: actions/checkout@v7
 
-      - uses: actions/setup-dotnet@v5
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: 10.0.x
+          # Provisions .NET 10 for build tooling while ensuring the .NET 8 runtime is present for execution
+          dotnet-version: |
+            8.0.x
+            10.0.x
           cache: true
           cache-dependency-path: |
             **/*.csproj
             **/*.fsproj
             **/Directory.Build.props
 
-      - name: Restore Dependencies
+      - name: Restore dependencies
         run: dotnet restore Jerkball2D.MatchTimer.Benchmarks.csproj
         working-directory: src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks
 
-      - name: Execute Performance Verification (net8.0)
+      - name: Run benchmarks
         run: dotnet run -c Release -f net8.0 --no-restore -- --exporters json markdown --filter '*'
         working-directory: src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks
 
-      - name: Upload Performance Reports
+      - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
