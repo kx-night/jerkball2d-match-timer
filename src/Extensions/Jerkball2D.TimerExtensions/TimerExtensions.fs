@@ -32,11 +32,11 @@ module MatchTimerController =
     open TimerTypes
 
     let inline tick (deltaTime: single) (timer: MatchTimer) : TimerState =
-        match timer with
-        | CurrentState TimerState.Running ->
+        match (|CurrentState|) timer with
+        | TimerState.Running ->
             timer.Update deltaTime
             if timer.IsCompleted then TimerState.Completed else TimerState.Running
-        | CurrentState state ->
+        | state ->
             state
 
     let inline play (timer: MatchTimer) : MatchTimer =
