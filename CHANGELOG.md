@@ -15,9 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Standardized action step naming conventions across both `ci.yml` and `bench.yml` pipelines.
-
 - Configured multi-targeted .NET SDK environment specs (`8.0.x` and `10.0.x`) within the benchmarking runtime execution step.
 
 ### Fixed
 
 - Resolved `.slnx` parsing structural syntax errors by correcting required edge slashes on virtual folders.
+
+### Removed
+
+- Removed absolute/unslashed solution folder paths to adhere to strict `.slnx` validation engine specifications.
