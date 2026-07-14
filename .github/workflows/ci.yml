@@ -38,9 +38,16 @@ jobs:
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
-          cache: true
-          # Explicit glob patterns ensure caching works since setup-dotnet doesn't natively parse .slnx yet
-          cache-dependency-path: '**/[Cc]sproj'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.nuget/packages
+            ${{ github.workspace }}/../.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
       - name: Restore dependencies
         run: dotnet restore Jerkball2D.MatchTimer.slnx
