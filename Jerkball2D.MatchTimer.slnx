@@ -1,5 +1,5 @@
 <Solution>
-  <Folder Name="/src/">
+  <Folder Name="src">
     <Folder Name="Core">
       <Project Path="src/Core/Jerkball2D.MatchTimer/Jerkball2D.MatchTimer.csproj" />
     </Folder>
