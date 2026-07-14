@@ -1,14 +1,14 @@
 <Solution>
-  <Folder Name="src">
-    <Folder Name="Core">
+  <Folder Name="/src/">
+    <Folder Name="/Core/">
       <Project Path="src/Core/Jerkball2D.MatchTimer/Jerkball2D.MatchTimer.csproj" />
     </Folder>
 
-    <Folder Name="Extensions">
+    <Folder Name="/Extensions/">
       <Project Path="src/Extensions/Jerkball2D.TimerExtensions/Jerkball2D.TimerExtensions.fsproj" />
     </Folder>
 
-    <Folder Name="Diagnostics">
+    <Folder Name="/Diagnostics/">
       <Project Path="src/Diagnostics/Jerkball2D.MatchTimer.Benchmarks/Jerkball2D.MatchTimer.Benchmarks.csproj" />
       <Project Path="src/Diagnostics/Jerkball2D.MatchTimer.Tests/Jerkball2D.MatchTimer.Tests.csproj" />
     </Folder>
