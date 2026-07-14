@@ -31,19 +31,22 @@ jobs:
         shell: bash
 
     steps:
-      - name: Checkout Source Code
+      - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Initialize .NET SDK
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
+          cache: true
+          # Explicit glob patterns ensure caching works since setup-dotnet doesn't natively parse .slnx yet
+          cache-dependency-path: '**/[Cc]sproj'
 
-      - name: Restore Solution Dependencies
+      - name: Restore dependencies
         run: dotnet restore Jerkball2D.MatchTimer.slnx
 
-      - name: Compile Solution Build (Release)
+      - name: Build solution
         run: dotnet build Jerkball2D.MatchTimer.slnx -c Release --no-restore
 
-      - name: Execute Functional Unit Tests
+      - name: Run tests
         run: dotnet test Jerkball2D.MatchTimer.slnx -c Release --no-build --verbosity normal
