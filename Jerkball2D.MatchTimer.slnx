@@ -4,6 +4,10 @@
       <Project Path="src/Core/Jerkball2D.MatchTimer/Jerkball2D.MatchTimer.csproj" />
     </Folder>
 
+    <Folder Name="/Demo/">
+      <Project Path="src/Demo/Jerkball2D.MatchTimer.Demo/Jerkball2D.MatchTimer.Demo.csproj" />
+    </Folder>
+
     <Folder Name="/Extensions/">
       <Project Path="src/Extensions/Jerkball2D.TimerExtensions/Jerkball2D.TimerExtensions.fsproj" />
     </Folder>
