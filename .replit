@@ -1,0 +1,5 @@
+modules = ["csharp"]
+run = "dotnet run --project src/Demo/Jerkball2D.MatchTimer.Demo/Jerkball2D.MatchTimer.Demo.csproj"
+
+[packager]
+language = "csharp"

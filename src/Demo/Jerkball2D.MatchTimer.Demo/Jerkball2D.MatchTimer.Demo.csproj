@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Jerkball2D.MatchTimer.Demo</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Jerkball2D.MatchTimer\Jerkball2D.MatchTimer.csproj" />
+  </ItemGroup>
+
+</Project>
