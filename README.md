@@ -8,7 +8,7 @@
 
 <p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MPL--2.0-blue.svg" alt="License: MPL-2.0"></a>
-  <a href="https://dotnet.microsoft.com/"><img src="https://img.shields.io/badge/.NET-6%2B-5C2D91.svg?logo=.net&logoColor=white" alt=".NET 6+"></a>
+  <a href="https://dotnet.microsoft.com/"><img src="https://img.shields.io/badge/.NET-8%20%7C%209%20%7C%2010-5C2D91.svg?logo=.net&logoColor=white" alt=".NET 8, 9, 10"></a>
   <a href="https://github.com/kx-night/jerkball2d-match-timer/actions"><img src="https://github.com/kx-night/jerkball2d-match-timer/actions/workflows/ci.yml/badge.svg" alt="Build Status"></a>
   <a href="https://github.com/kx-night/jerkball2d-match-timer/actions"><img src="https://github.com/kx-night/jerkball2d-match-timer/actions/workflows/bench.yml/badge.svg" alt="Benchmark Status"></a>
   <img src="https://img.shields.io/badge/coverage-passing-brightgreen.svg" alt="Coverage">
@@ -71,7 +71,7 @@ For developers who prefer functional programming paradigms, the `Jerkball2D.Time
 
 ---
 
-### Using It from C#
+### Using It from C #
 
 Here is how you can leverage the F# wrapper directly from your C# codebase:
 
@@ -138,8 +138,10 @@ else
 
 | Component | Target Framework Support | Minimum Language Version |
 | :--- | :--- | :--- |
-| **C# Core Library** (`Jerkball2D`) | .NET Standard 2.0+ or .NET 6.0+ | C# 10.0+ |
-| **F# Extensions** (`Jerkball2D.TimerExtensions`) | .NET Standard 2.0+ or .NET 6.0+ | F# 6.0+ |
+| **C# Core Library** (`Jerkball2D`) | `net8.0`, `net9.0`, `net10.0` (multi-targeted) | `LangVersion=latest` (C# 12+) |
+| **F# Extensions** (`Jerkball2D.TimerExtensions`) | `net8.0`, `net9.0`, `net10.0` (multi-targeted) | F# 6.0+ |
+
+> Target frameworks and language version are set centrally in `Directory.Build.props` and apply to every project in the solution — engine consumers (Unity, Godot, etc.) should confirm their own runtime supports one of the three targets above.
 
 ---
 
@@ -502,6 +504,6 @@ This project is licensed under the **Mozilla Public License 2.0** (MPL-2.0, SPDX
   </a>
 </p>
 
-<p align="center">
+<p align="center">j
   <sub>Made with ❤️ by the contributors. Click the image to view the contributor graph.</sub>
 </p>
