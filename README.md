@@ -71,7 +71,7 @@ For developers who prefer functional programming paradigms, the `Jerkball2D.Time
 
 ---
 
-### Using It from C #
+### Using It from C#
 
 Here is how you can leverage the F# wrapper directly from your C# codebase:
 
